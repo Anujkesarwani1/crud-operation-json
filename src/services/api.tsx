@@ -1,31 +1,39 @@
 import axios from "axios";
 
-const usersUrl = "http://localhost:3002/users/";
+const usersUrl = "http://localhost:8082/users";
 
-export const getUsers = async (id: any) => {
-  id = id || "";
+export const getUsers = async () => {
   try {
-    return await axios.get(`${usersUrl}/${id}`);
-  } catch (error) {
-    console.log("Error while calling getUsers api ", error);
+    return await axios.get(usersUrl);
+  } catch (error: any) {
+    console.log("Error while calling getUsers api ", error.message);
+  }
+};
+
+export const getUser = async (data: any) => {
+  try {
+    return await axios.get(`${usersUrl}/${data}`);
+  } catch (error: any) {
+    console.log("Error while calling getUsers api ", error.message);
   }
 };
 
 export const addUser = async (user: any) => {
+  return await axios.post(`${usersUrl}`, user);
+};
+
+export const deleteUser = async (id: any) => {
   try {
-    const response = await axios.post(usersUrl, user);
-    console.log("User added successfully:", response.data);
-    return response.data;
-  } catch (error) {
-    console.error("Error adding user:", error);
-    throw error;
+    return await axios.delete(`${usersUrl}/${id}`);
+  } catch (error: any) {
+    console.log("Error while calling getUsers api ", error.message);
   }
 };
 
-export const deleteUser = async (id: number) => {
-  return await axios.delete(`${usersUrl}/${id}`);
-};
-
-export const editUser = async (id: number, user: any) => {
-  return await axios.put(`${usersUrl}/${id}`, user);
+export const editUser = async (id: any, user: any) => {
+  try {
+    return await axios.put(`${usersUrl}/${id}`, user);
+  } catch (error: any) {
+    console.log("Error while calling getUsers api ", error.message);
+  }
 };
